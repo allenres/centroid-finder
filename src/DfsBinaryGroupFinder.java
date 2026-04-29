@@ -41,7 +41,7 @@ public class DfsBinaryGroupFinder implements BinaryGroupFinder {
         int col = image[0].length;
         boolean[][] visited = new boolean[row][col];
         List<Group> totalGroups = new ArrayList<>();
-        
+        // row 3 col 4
         for(int r = 0; r < row; r++) {
             for(int c = 0; c < col; c++) {
                 if(image[r][c] != 1 && image[r][c] != 0) throw new IllegalArgumentException();
@@ -51,8 +51,8 @@ public class DfsBinaryGroupFinder implements BinaryGroupFinder {
                     int sumY = 0;
                     dfs(image, r, c, visited, result);
                     for(Coordinate crd : result) {
-                        sumX += crd.x();
-                        sumY += crd.y();
+                        sumX += crd.x(); // 0 + 0 | 1 + 2 + 2 + 2 + 2  sum = 9
+                        sumY += crd.y(); // 0 + 1 | 3 + 3 + 2 + 1 + 0 sum 9
                     }
                     Coordinate centroid = new Coordinate(sumX / result.size(), sumY / result.size());
                     Group g = new Group(result.size(), centroid);
@@ -60,9 +60,30 @@ public class DfsBinaryGroupFinder implements BinaryGroupFinder {
                 }
             }
         }
-        return totalGroups;
+        // sortDesc(totalGroups);
+
+        return sortDesc(totalGroups);
     }
 
+    public static List<Group> sortDesc(List<Group> group){
+        if (group.isEmpty() || group == null) throw new IndexOutOfBoundsException(); 
+        // System.err.println(group.size());
+        List<Group> sorted = new ArrayList<>();
+        Group largestGroup = group.get(0);
+        
+        for(Group g: group){
+            if (g.compareTo(largestGroup) > 0) {
+                sorted.add(0, g);
+                largestGroup = g;
+            } else {
+                sorted.add(g);
+            }
+        }
+        return sorted;
+    }
+
+    // rSize 3 cSize 4  newRow = 2 newCol = 0  result = [[1,3], [2, 3], [2, 2], [2, 1], [2, 0]]
+    // movements down (+1, 0)
     public void dfs(int[][] image, int newRow, int newCol, boolean[][] visited, List<Coordinate> result) {
         if(newRow < 0 || newCol < 0 || newRow >= image.length || newCol >= image[0].length || image[newRow][newCol] == 0 || visited[newRow][newCol]) return;
 
@@ -75,4 +96,18 @@ public class DfsBinaryGroupFinder implements BinaryGroupFinder {
         }
     }
     
+    public static void main(String[] args) {
+        DfsBinaryGroupFinder finder = new DfsBinaryGroupFinder();
+        int[][] image = {
+                {1, 1, 0, 0},
+                {0, 0, 0, 1},
+                {1, 1, 1, 1}
+        };
+
+        // System.out.println(finder.findConnectedGroups(image));
+
+        // sortDesc(finder.findConnectedGroups(image));
+
+        System.out.println(sortDesc(finder.findConnectedGroups(image)));
+    }
 }
