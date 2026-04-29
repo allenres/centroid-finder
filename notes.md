@@ -53,4 +53,5 @@ Group
 Coordinate
  - a record containing the location (x, y)
  - y increases downard, x increases to the right
+ - (row:4, column:7) corresponds to (x:7, y:4)
  - 0, 0 = top left
