@@ -126,4 +126,32 @@ EuclideanColorDistance (implements ColorDistanceFinder)
  - refer to the interface BinaryGroupFinder or javadoc
 
  ```` records ````
- 
+ Coordinate.java
+  - represents the locaitons in an image or array
+  - x = row, y = column
+  - up (-1, 0)
+  - down (1, 0)
+  - left (0, -1)
+  - right (0, 1)
+
+Group.java
+- The top-left cell of the array (row:0, column:0) is considered to be coordinate (x:0, y:0).
+- Y increases downward and X increases to the right. For 
+- example, (row:4, column:7)
+corresponds to (x:7, y:4).
+
+{0,0,0,0,0,0,0,0}
+{0,0,0,0,0,0,0,0}
+{0,0,0,0,0,0,0,0}
+{0,0,0,0,0,0,0,0}
+{0,0,0,0,0,0,0,X}
+{0,0,0,0,0,0,0,0}
+{0,0,0,0,0,0,0,0}
+{0,0,0,0,X,0,0,0}
+
+- centroid is the average of pixel cords in each dimension using integer division
+
+- sum of (x or y) / number of pixels of the group
+- contains compareTo method
+- toCsv
+- refer to docs for this on the Group Record.
