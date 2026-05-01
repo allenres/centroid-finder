@@ -155,3 +155,144 @@ corresponds to (x:7, y:4).
 - contains compareTo method
 - toCsv
 - refer to docs for this on the Group Record.
+
+``` output from terminal DFSBinaryGroupFinder sortDesc```
+
+
+current group to check: Group[size=1, centroid=Coordinate[x=0, y=0]]
+next group to check: Group[size=1, centroid=Coordinate[x=0, y=2]]
+comparing:Group[size=1, centroid=Coordinate[x=0, y=0]] to Group[size=1, centroid=Coordinate[x=0, y=2]]
+comp: -1
+
+
+
+Group[size=1, centroid=Coordinate[x=0, y=0]] is less than Group[size=1, centroid=Coordinate[x=0, y=2]]
+Current list: [Group[size=1, centroid=Coordinate[x=0, y=0]], Group[size=1, centroid=Coordinate[x=0, y=2]], Group[size=1, centroid=Coordinate[x=2, y=0]], Group[size=1, centroid=Coordinate[x=2, y=2]]]
+
+    current sorting: [Group[size=1, centroid=Coordinate[x=0, y=2]], Group[size=1, centroid=Coordinate[x=0, y=2]], Group[size=1, centroid=Coordinate[x=2, y=0]], Group[size=1, centroid=Coordinate[x=2, y=2]]]
+
+    current sorting: [Group[size=1, centroid=Coordinate[x=0, y=2]], Group[size=1, centroid=Coordinate[x=0, y=0]], Group[size=1, centroid=Coordinate[x=2, y=0]], Group[size=1, centroid=Coordinate[x=2, y=2]]]
+
+    current group to track: Group[size=1, centroid=Coordinate[x=0, y=0]]
+
+------------------
+next group to check: Group[size=1, centroid=Coordinate[x=2, y=0]]
+comparing:Group[size=1, centroid=Coordinate[x=0, y=0]] to Group[size=1, centroid=Coordinate[x=2, y=0]]
+comp: -1
+
+
+
+Group[size=1, centroid=Coordinate[x=0, y=0]] is less than Group[size=1, centroid=Coordinate[x=2, y=0]]
+Current list: [Group[size=1, centroid=Coordinate[x=0, y=2]], Group[size=1, centroid=Coordinate[x=0, y=0]], Group[size=1, centroid=Coordinate[x=2, y=0]], Group[size=1, centroid=Coordinate[x=2, y=2]]]
+
+    current sorting: [Group[size=1, centroid=Coordinate[x=0, y=2]], Group[size=1, centroid=Coordinate[x=2, y=0]], Group[size=1, centroid=Coordinate[x=2, y=0]], Group[size=1, centroid=Coordinate[x=2, y=2]]]
+
+    current sorting: [Group[size=1, centroid=Coordinate[x=0, y=2]], Group[size=1, centroid=Coordinate[x=2, y=0]], Group[size=1, centroid=Coordinate[x=0, y=0]], Group[size=1, centroid=Coordinate[x=2, y=2]]]
+
+    current group to track: Group[size=1, centroid=Coordinate[x=0, y=0]]
+
+------------------
+next group to check: Group[size=1, centroid=Coordinate[x=2, y=2]]
+comparing:Group[size=1, centroid=Coordinate[x=0, y=0]] to Group[size=1, centroid=Coordinate[x=2, y=2]]
+comp: -1
+
+
+
+Group[size=1, centroid=Coordinate[x=0, y=0]] is less than Group[size=1, centroid=Coordinate[x=2, y=2]]
+Current list: [Group[size=1, centroid=Coordinate[x=0, y=2]], Group[size=1, centroid=Coordinate[x=2, y=0]], Group[size=1, centroid=Coordinate[x=0, y=0]], Group[size=1, centroid=Coordinate[x=2, y=2]]]
+
+    current sorting: [Group[size=1, centroid=Coordinate[x=0, y=2]], Group[size=1, centroid=Coordinate[x=2, y=0]], Group[size=1, centroid=Coordinate[x=2, y=2]], Group[size=1, centroid=Coordinate[x=2, y=2]]]
+
+    current sorting: [Group[size=1, centroid=Coordinate[x=0, y=2]], Group[size=1, centroid=Coordinate[x=2, y=0]], Group[size=1, centroid=Coordinate[x=2, y=2]], Group[size=1, centroid=Coordinate[x=0, y=0]]]
+
+    current group to track: Group[size=1, centroid=Coordinate[x=0, y=0]]
+
+------------------
+current group to check: Group[size=1, centroid=Coordinate[x=0, y=2]]
+next group to check: Group[size=1, centroid=Coordinate[x=2, y=0]]
+comparing:Group[size=1, centroid=Coordinate[x=0, y=2]] to Group[size=1, centroid=Coordinate[x=2, y=0]]
+comp: -1
+
+
+
+Group[size=1, centroid=Coordinate[x=0, y=2]] is less than Group[size=1, centroid=Coordinate[x=2, y=0]]
+Current list: [Group[size=1, centroid=Coordinate[x=0, y=2]], Group[size=1, centroid=Coordinate[x=2, y=0]], Group[size=1, centroid=Coordinate[x=2, y=2]], Group[size=1, centroid=Coordinate[x=0, y=0]]]
+
+    current sorting: [Group[size=1, centroid=Coordinate[x=2, y=0]], Group[size=1, centroid=Coordinate[x=2, y=0]], Group[size=1, centroid=Coordinate[x=2, y=2]], Group[size=1, centroid=Coordinate[x=0, y=0]]]
+
+    current sorting: [Group[size=1, centroid=Coordinate[x=2, y=0]], Group[size=1, centroid=Coordinate[x=0, y=2]], Group[size=1, centroid=Coordinate[x=2, y=2]], Group[size=1, centroid=Coordinate[x=0, y=0]]]
+
+    current group to track: Group[size=1, centroid=Coordinate[x=0, y=2]]
+
+------------------
+next group to check: Group[size=1, centroid=Coordinate[x=2, y=2]]
+comparing:Group[size=1, centroid=Coordinate[x=0, y=2]] to Group[size=1, centroid=Coordinate[x=2, y=2]]
+comp: -1
+
+
+
+Group[size=1, centroid=Coordinate[x=0, y=2]] is less than Group[size=1, centroid=Coordinate[x=2, y=2]]
+Current list: [Group[size=1, centroid=Coordinate[x=2, y=0]], Group[size=1, centroid=Coordinate[x=0, y=2]], Group[size=1, centroid=Coordinate[x=2, y=2]], Group[size=1, centroid=Coordinate[x=0, y=0]]]
+
+  current sorting: [Group[size=1, centroid=Coordinate[x=2, y=0]], Group[size=1, centroid=Coordinate[x=2, y=2]], Group[size=1, centroid=Coordinate[x=2, y=2]], Group[size=1, centroid=Coordinate[x=0, y=0]]]
+
+  current sorting: [Group[size=1, centroid=Coordinate[x=2, y=0]], Group[size=1, centroid=Coordinate[x=2, y=2]], Group[size=1, centroid=Coordinate[x=0, y=2]], Group[size=1, centroid=Coordinate[x=0, y=0]]]
+
+  current group to track: Group[size=1, centroid=Coordinate[x=0, y=2]]
+
+------------------
+next group to check: Group[size=1, centroid=Coordinate[x=0, y=0]]
+comparing:Group[size=1, centroid=Coordinate[x=0, y=2]] to Group[size=1, centroid=Coordinate[x=0, y=0]]
+comp: 1
+
+
+
+current group to check: Group[size=1, centroid=Coordinate[x=2, y=0]]
+next group to check: Group[size=1, centroid=Coordinate[x=2, y=2]]
+comparing:Group[size=1, centroid=Coordinate[x=2, y=0]] to Group[size=1, centroid=Coordinate[x=2, y=2]]
+comp: -1
+
+
+
+Group[size=1, centroid=Coordinate[x=2, y=0]] is less than Group[size=1, centroid=Coordinate[x=2, y=2]]
+Current list: [Group[size=1, centroid=Coordinate[x=2, y=0]], Group[size=1, centroid=Coordinate[x=2, y=2]], Group[size=1, centroid=Coordinate[x=0, y=2]], Group[size=1, centroid=Coordinate[x=0, y=0]]]
+
+    current sorting: [Group[size=1, centroid=Coordinate[x=2, y=2]], Group[size=1, centroid=Coordinate[x=2, y=2]], Group[size=1, centroid=Coordinate[x=0, y=2]], Group[size=1, centroid=Coordinate[x=0, y=0]]]
+
+    current sorting: [Group[size=1, centroid=Coordinate[x=2, y=2]], Group[size=1, centroid=Coordinate[x=2, y=0]], Group[size=1, centroid=Coordinate[x=0, y=2]], Group[size=1, centroid=Coordinate[x=0, y=0]]]
+
+    current group to track: Group[size=1, centroid=Coordinate[x=2, y=0]]
+
+------------------
+next group to check: Group[size=1, centroid=Coordinate[x=0, y=2]]
+comparing:Group[size=1, centroid=Coordinate[x=2, y=0]] to Group[size=1, centroid=Coordinate[x=0, y=2]]
+comp: 1
+
+
+
+next group to check: Group[size=1, centroid=Coordinate[x=0, y=0]]
+comparing:Group[size=1, centroid=Coordinate[x=2, y=0]] to Group[size=1, centroid=Coordinate[x=0, y=0]]
+comp: 1
+
+
+
+current group to check: Group[size=1, centroid=Coordinate[x=2, y=2]]
+next group to check: Group[size=1, centroid=Coordinate[x=2, y=0]]
+comparing:Group[size=1, centroid=Coordinate[x=2, y=2]] to Group[size=1, centroid=Coordinate[x=2, y=0]]
+comp: 1
+
+
+
+next group to check: Group[size=1, centroid=Coordinate[x=0, y=2]]
+comparing:Group[size=1, centroid=Coordinate[x=2, y=2]] to Group[size=1, centroid=Coordinate[x=0, y=2]]
+comp: 1
+
+
+
+next group to check: Group[size=1, centroid=Coordinate[x=0, y=0]]
+comparing:Group[size=1, centroid=Coordinate[x=2, y=2]] to Group[size=1, centroid=Coordinate[x=0, y=0]]
+comp: 1
+
+
+
+[Group[size=1, centroid=Coordinate[x=2, y=2]], Group[size=1, centroid=Coordinate[x=2, y=0]], Group[size=1, centroid=Coordinate[x=0, y=2]], Group[size=1, centroid=Coordinate[x=0, y=0]]] 
