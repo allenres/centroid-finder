@@ -1,4 +1,11 @@
+package test.java.io.github.allenres.centroidFinder;
+
 import org.junit.jupiter.api.Test;
+
+import main.java.io.github.allenres.centroidFinder.DistanceImageBinarizer;
+import main.java.io.github.allenres.centroidFinder.EuclideanColorDistance;
+import main.java.io.github.allenres.centroidFinder.ImageBinarizer;
+
 import static org.junit.jupiter.api.Assertions.*;
 import java.awt.image.BufferedImage;
 

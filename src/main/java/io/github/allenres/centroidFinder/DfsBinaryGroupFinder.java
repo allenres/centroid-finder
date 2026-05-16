@@ -1,3 +1,5 @@
+package main.java.io.github.allenres.centroidFinder;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;

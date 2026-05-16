@@ -1,3 +1,5 @@
+package main.java.io.github.allenres.centroidFinder;
+
 /**
  * Represents a location in an image or array
  * 
