@@ -1,12 +1,6 @@
-package test.java.io.github.allenres.centroidFinder;
+package io.github.allenres.centroidFinder;
 
 import org.junit.jupiter.api.Test;
-
-import main.java.io.github.allenres.centroidFinder.BinarizingImageGroupFinder;
-import main.java.io.github.allenres.centroidFinder.BinaryGroupFinder;
-import main.java.io.github.allenres.centroidFinder.Coordinate;
-import main.java.io.github.allenres.centroidFinder.Group;
-import main.java.io.github.allenres.centroidFinder.ImageBinarizer;
 
 import static org.junit.jupiter.api.Assertions.*;
 

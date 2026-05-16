@@ -1,4 +1,4 @@
-package main.java.io.github.allenres.centroidFinder;
+package io.github.allenres.centroidFinder;
 
 /**
  * Represents a group of contiguous pixels in an image.

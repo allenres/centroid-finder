@@ -1,4 +1,4 @@
-package main.java.io.github.allenres.centroidFinder;
+package io.github.allenres.centroidFinder;
 
 import java.awt.image.BufferedImage;
 import java.util.List;

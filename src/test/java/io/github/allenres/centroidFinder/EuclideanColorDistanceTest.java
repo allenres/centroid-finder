@@ -1,8 +1,6 @@
-package test.java.io.github.allenres.centroidFinder;
+package io.github.allenres.centroidFinder;
 
 import org.junit.jupiter.api.Test;
-
-import main.java.io.github.allenres.centroidFinder.EuclideanColorDistance;
 
 import static org.junit.jupiter.api.Assertions.*;
 

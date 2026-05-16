@@ -1,10 +1,6 @@
-package test.java.io.github.allenres.centroidFinder;
+package io.github.allenres.centroidFinder;
 
 import org.junit.jupiter.api.Test;
-
-import main.java.io.github.allenres.centroidFinder.Coordinate;
-import main.java.io.github.allenres.centroidFinder.DfsBinaryGroupFinder;
-import main.java.io.github.allenres.centroidFinder.Group;
 
 import java.util.List;
 
