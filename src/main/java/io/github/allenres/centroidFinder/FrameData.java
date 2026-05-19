@@ -6,6 +6,4 @@ import java.awt.image.BufferedImage;
 public class FrameData {
     BufferedImage image;
     double timestampSeconds;
-} {
-    
 }

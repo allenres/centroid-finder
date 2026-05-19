@@ -9,6 +9,13 @@ import java.util.List;
 */
 public class LargestGroupFinder {
     public Group findLargest(List<Group> groups) {
-        return new Group();
+        if (groups.isEmpty()) return null;
+        Group largest = groups.get(0);
+        for(Group g : groups) {
+            if(g.size() > largest.size()) {
+                largest = g;
+            }
+        }
+        return largest;
     }
 }
