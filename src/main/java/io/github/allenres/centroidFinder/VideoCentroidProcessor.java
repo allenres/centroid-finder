@@ -1,7 +1,11 @@
 package io.github.allenres.centroidFinder;
 
+import java.awt.image.BufferedImage;
 import java.io.PrintWriter;
 import java.util.List;
+
+import org.bytedeco.javacv.*;
+import org.bytedeco.opencv.opencv_core.Mat;
 
 /*
 For each frame:
@@ -14,32 +18,57 @@ Write timestamp + centroid to CSV
 */
 public class VideoCentroidProcessor {
     public void process(String inputVideo, String outputCsv, int targetColor, int threshold) {
-        // Create the DistanceImageBinarizer with a EuclideanColorDistance instance.
-        ColorDistanceFinder distanceFinder = new EuclideanColorDistance();
-        ImageBinarizer binarizer = new DistanceImageBinarizer(distanceFinder, targetColor, threshold);
 
-        // Binarize the frame.
-        int[][] binaryArray = binarizer.toBinaryArray(frame);
-        BufferedImage binaryImage = binarizer.toBufferedImage(binaryArray);
+        try (FFmpegFrameGrabber grabber = new FFmpegFrameGrabber(inputVideo)) {
 
-        // Create an ImageGroupFinder using a BinarizingImageGroupFinder with a
-        // DFS-based BinaryGroupFinder.
-        ImageGroupFinder groupFinder = new BinarizingImageGroupFinder(binarizer, new DfsBinaryGroupFinder());
+            grabber.start();
 
-        // Find connected groups in the frame.
-        // The BinarizingImageGroupFinder is expected to internally binarize the image,
-        // then locate connected groups of white pixels.
-        List<Group> groups = groupFinder.findConnectedGroups(frame);
+            long timestampMicroseconds = grabber.getTimestamp();
+            double timestampSeconds = timestampMicroseconds / 1000000.0;
 
-        // find largest group
-        LargestGroupFinder largestGroupFinder = new LargestGroupFinder();
-        Group largestGroup = largestGroupFinder.findLargest(groups);
+            Java2DFrameConverter biConverter = new Java2DFrameConverter();
 
-        // Write the groups information to a CSV file.
-        try (PrintWriter writer = new PrintWriter(outputCsv)) {
-            writer.println("timestamp" + largestGroup.centroid());
+            Frame frame;
+
+            while ((frame = grabber.grabImage()) != null) {
+
+                // convert frame to BufferedImage
+                BufferedImage image = biConverter.convert(frame);
+
+                // Create the DistanceImageBinarizer with a EuclideanColorDistance instance.
+                ColorDistanceFinder distanceFinder = new EuclideanColorDistance();
+                ImageBinarizer binarizer = new DistanceImageBinarizer(distanceFinder, targetColor, threshold);
+
+                // Binarize the frame.
+                int[][] binaryArray = binarizer.toBinaryArray(image);
+                BufferedImage binaryImage = binarizer.toBufferedImage(binaryArray);
+
+                // Create an ImageGroupFinder using a BinarizingImageGroupFinder with a
+                // DFS-based BinaryGroupFinder.
+                ImageGroupFinder groupFinder = new BinarizingImageGroupFinder(binarizer, new DfsBinaryGroupFinder());
+
+                // Find connected groups in the frame.
+                // The BinarizingImageGroupFinder is expected to internally binarize the image,
+                // then locate connected groups of white pixels.
+                List<Group> groups = groupFinder.findConnectedGroups(binaryImage);
+
+                // find largest group
+                LargestGroupFinder largestGroupFinder = new LargestGroupFinder();
+                Group largestGroup = largestGroupFinder.findLargest(groups);
+
+                // Write the groups information to a CSV file.
+                try (PrintWriter writer = new PrintWriter(outputCsv)) {
+                    writer.println(timestampSeconds + largestGroup.centroid().toString());
+                } catch (Exception e) {
+                    System.err.println("Error writing " + outputCsv + ".csv");
+                    e.printStackTrace();
+                }
+            }
+
+            grabber.stop();
+            biConverter.close();
+
         } catch (Exception e) {
-            System.err.println("Error writing " + outputCsv + ".csv");
             e.printStackTrace();
         }
     }
