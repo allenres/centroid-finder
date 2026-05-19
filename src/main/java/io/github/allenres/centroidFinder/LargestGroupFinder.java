@@ -12,7 +12,7 @@ public class LargestGroupFinder {
         if (groups.isEmpty()) return null;
         Group largest = groups.get(0);
         for(Group g : groups) {
-            if(g.size() > largest.size()) {
+            if(g.size() >= largest.size()) {
                 largest = g;
             }
         }
