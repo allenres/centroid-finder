@@ -9,7 +9,7 @@ import java.util.List;
 */
 public class LargestGroupFinder {
     public Group findLargest(List<Group> groups) {
-        if (groups.isEmpty()) return null;
+        if (groups.isEmpty()) return new Group(groups.size(), new Coordinate(-1, -1));
         Group largest = groups.get(0);
         for(Group g : groups) {
             if(g.size() >= largest.size()) {

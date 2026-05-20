@@ -18,21 +18,20 @@ Write timestamp + centroid to CSV
 */
 public class VideoCentroidProcessor {
     public void process(String inputVideo, String outputCsv, int targetColor, int threshold) {
-
         try (FFmpegFrameGrabber grabber = new FFmpegFrameGrabber(inputVideo)) {
-
-            grabber.start();
-
-            long timestampMicroseconds = grabber.getTimestamp();
-            double timestampSeconds = timestampMicroseconds / 1000000.0;
-
+            PrintWriter writer = new PrintWriter(outputCsv);
             Java2DFrameConverter biConverter = new Java2DFrameConverter();
 
+            grabber.start();
             Frame frame;
 
             while ((frame = grabber.grabImage()) != null) {
-
-                // convert frame to BufferedImage
+                if(frame.image == null) continue;
+                // get time stamp
+                long timestampMicroseconds = grabber.getTimestamp();
+                double timestampSeconds = timestampMicroseconds / 1000000.0;
+                
+                // Convert frame to BufferedImage
                 BufferedImage image = biConverter.convert(frame);
 
                 // Create the DistanceImageBinarizer with a EuclideanColorDistance instance.
@@ -55,16 +54,11 @@ public class VideoCentroidProcessor {
                 // find largest group
                 LargestGroupFinder largestGroupFinder = new LargestGroupFinder();
                 Group largestGroup = largestGroupFinder.findLargest(groups);
-
+                
                 // Write the groups information to a CSV file.
-                try (PrintWriter writer = new PrintWriter(outputCsv)) {
-                    writer.println(timestampSeconds + largestGroup.centroid().toString());
-                } catch (Exception e) {
-                    System.err.println("Error writing " + outputCsv + ".csv");
-                    e.printStackTrace();
-                }
+                writer.println(timestampSeconds + "," + largestGroup.centroid().x() + "," + largestGroup.centroid().y());
             }
-
+            writer.close();
             grabber.stop();
             biConverter.close();
 
