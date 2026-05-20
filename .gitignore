@@ -1,3 +1,6 @@
+# ignore video
+sampleInput/ensantina.mp4
+
 # Maven build output
 target/
 
