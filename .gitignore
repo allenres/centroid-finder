@@ -1,5 +1,6 @@
-# ignore video
+# ignore video and csv
 sampleInput/ensantina.mp4
+sampleOutput/result.csv
 
 # Maven build output
 target/
