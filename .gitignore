@@ -1,5 +1,7 @@
 # ignore video and csv
 sampleInput/ensantina.mp4
+sampleInput/ensantina2.mp4
+sampleInput/test.mp4
 sampleOutput/result.csv
 
 # Maven build output
