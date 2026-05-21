@@ -302,3 +302,6 @@ mvn exec:java -Dexec.args="sampleInput/ensantina2.mp4 sampleOutput/result.csv 53
 
 // test.mp4
 mvn exec:java -Dexec.args="sampleInput/test.mp4 sampleOutput/result.csv FFFFFF 50"
+
+// with JAR:
+java -jar target/centroid-finder-1.0-SNAPSHOT.jar sampleInput/test.mp4 sampleOutput/result.csv FFFFFF 50
