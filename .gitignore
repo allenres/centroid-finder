@@ -4,6 +4,8 @@ sampleInput/ensantina2.mp4
 sampleInput/test.mp4
 sampleOutput/result.csv
 
+server/node_modules
+
 # Maven build output
 target/
 
