@@ -28,9 +28,6 @@ public class VideoCentroidProcessor {
 
             Frame frame;
 
-            // -----------------------------
-            // Create reusable objects ONCE
-            // -----------------------------
             ColorDistanceFinder distanceFinder = new EuclideanColorDistance();
             ImageBinarizer binarizer =
                     new DistanceImageBinarizer(distanceFinder, targetColor, threshold);

@@ -27,16 +27,6 @@ public class VideoCentroidApp {
             return;
         }
 
-        // check for valid video here
-        // BufferedImage inputImage = null;
-        // try {
-        //     inputImage = ImageIO.read(new File(inputImagePath));
-        // } catch (Exception e) {
-        //     System.err.println("Error loading image: " + inputImagePath);
-        //     e.printStackTrace();
-        //     return;
-        // }
-
         // Parse the target color from a hex string (format RRGGBB) into a 24-bit
         // integer (0xRRGGBB)
         int targetColor = 0;
