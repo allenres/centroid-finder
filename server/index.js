@@ -29,5 +29,5 @@ app.use(videoRoutes);
 
 //start server
 app.listen(PORT, () => {
-  console.log(`Salamander API server running on http://localhost:${port}`);
+  console.log(`Salamander API server running on http://localhost:${PORT}`);
 });
