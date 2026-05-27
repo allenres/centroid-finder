@@ -6,13 +6,22 @@ import { v4 as uuidv4 } from 'uuid';
 // Scans the directory for valid videos
 export const getAvailableVideos = async () => {
     return new Promise((resolve, reject) => {
+        //Reads all the files from env.VIDEOS_DIR then error if failed otherwise array of file names
         fs.readdir(process.env.VIDEOS_DIR, (err, files) => {
+            //If reading fails stop immediately
             if (err) return reject(err);
 
+            //Loop through files keep vaild ones
             const videoFiles = files.filter(file => {
+
+                //Get the extension changes to lower case
                 const ext = path.extname(file).toLowerCase();
+
+                //Return only valid ones
                 return ext === '.mp4' || ext === '.mov';
             });
+
+            //Resolve promise
             resolve(videoFiles);
         });
     });
