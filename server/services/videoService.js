@@ -58,15 +58,19 @@ export const getThumbnailStream = (filename, callback) => {
 
 // Starts the detached Java CLI application background run
 export const startProcessingJob = (filename, targetColor, threshold) => {
-    const inputPath = path.join(process.env.VIDEOS_DIR, filename);
-    const outputCsvName = `${filename}.csv`;
-    const outputPath = path.join(process.env.RESULTS_DIR, outputCsvName);
+    //Build paths 
+    const inputPath = path.join(process.env.VIDEOS_DIR, filename); //Input path /sampleInput
+    const outputCsvName = `${filename}.csv`; //Output csv name
+    const outputPath = path.join(process.env.RESULTS_DIR, outputCsvName); // Output path to the  {outputCsvName}.csv
 
+    //Check if video exists throw error if not
     if (!fs.existsSync(inputPath)) {
         throw new Error("Target video file does not exist.");
     }
 
+    //Generate unique Job ID
     const jobId = uuidv4();
+    //Json file, and initial status file
     const statusFilePath = path.join(process.env.STATUS_DIR, `${jobId}.json`);
     const logFilePath = path.join(process.env.STATUS_DIR, `${jobId}.log`);
 
@@ -76,6 +80,7 @@ export const startProcessingJob = (filename, targetColor, threshold) => {
     // Send standard stream out/err down to local log files
     const logFileDescriptor = fs.openSync(logFilePath, 'a');
 
+    //Run jar with these parameters
     const child = spawn('java', [
         '-jar',
         process.env.JAR_PATH,
@@ -84,10 +89,12 @@ export const startProcessingJob = (filename, targetColor, threshold) => {
         targetColor,
         threshold
     ], {
+        //Makes sure to run independently from node.js
         detached: true,
         stdio: ['ignore', logFileDescriptor, logFileDescriptor]
     });
-
+    
+    //Runs when java process exits
     child.on('close', (code) => {
         const finalStatus = code === 0
             ? { status: "done", result: `/results/${outputCsvName}` }
@@ -102,12 +109,16 @@ export const startProcessingJob = (filename, targetColor, threshold) => {
 
 // Fetches current state JSON profile from disk
 export const getJobStatus = (jobId) => {
+    //Create status file path
     const statusFilePath = path.join(process.env.STATUS_DIR, `${jobId}.json`);
 
+    //check to see if file exists if not return null
     if (!fs.existsSync(statusFilePath)) {
         return null;
     }
 
+    //Read the file completely returns a string "{"status":"done","result":"/results/ensantina.mp4.csv"}"
     const rawData = fs.readFileSync(statusFilePath, 'utf8');
+    //Parse rawData to json
     return JSON.parse(rawData);
 }
