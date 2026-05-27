@@ -29,15 +29,29 @@ export const getAvailableVideos = async () => {
 
 // Generates thumbnail data stream via FFmpeg
 export const getThumbnailStream = (filename, callback) => {
+    //Build the video Path /sampleInput + ensantina.mp4
     const videoPath = path.join(process.env.VIDEOS_DIR, filename);
 
+    //Checks if video exists in the filesystem
     if (!fs.existsSync(videoPath)) {
+        //If missing throw error
         return callback(new Error("Video file not found"), null);
     }
-
+    //Terminal command string creation
+    /*
+        -ss get 1 second into the video, 
+        -i "${videoPath}" input video path
+        -vframes 1 get one video frame
+        -f image2pipe sends through a stream/pipe
+        -vcodec mjpeg encode output as jpeg image data
+        -Send outpuit to stdout
+    */
     const ffmpegCmd = `ffmpeg -ss 00:00:01 -i "${videoPath}" -vframes 1 -f image2pipe -vcodec mjpeg pipe:1`;
+    //Run command encode as buffer because images are binary
     exec(ffmpegCmd, { encoding: 'buffer' }, (err, stdout) => {
+        //if fails send error back
         if (err) return callback(err, null);
+        //sucess, null means no error and here is the image buffer
         callback(null, stdout);
     });
 }
