@@ -296,3 +296,15 @@ comp: 1
 
 
 [Group[size=1, centroid=Coordinate[x=2, y=2]], Group[size=1, centroid=Coordinate[x=2, y=0]], Group[size=1, centroid=Coordinate[x=0, y=2]], Group[size=1, centroid=Coordinate[x=0, y=0]]] 
+
+// ensantina2.mp4
+mvn exec:java -Dexec.args="sampleInput/ensantina2.mp4 sampleOutput/result.csv 53000A 50"
+
+// test.mp4
+mvn exec:java -Dexec.args="sampleInput/test.mp4 sampleOutput/result.csv FFFFFF 50"
+
+// with JAR:
+java -jar target/centroid-finder-1.0-SNAPSHOT.jar sampleInput/test.mp4 sampleOutput/result.csv FFFFFF 50
+
+// with JAR:
+java -jar target/centroid-finder-1.0-SNAPSHOT.jar sampleInput/ensantina2.mp4 sampleOutput/result.csv 530108 50

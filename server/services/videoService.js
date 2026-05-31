@@ -1,0 +1,124 @@
+import fs from 'fs';
+import path from 'path';
+import { spawn, exec } from 'child_process';
+import { v4 as uuidv4 } from 'uuid';
+
+// Scans the directory for valid videos
+export const getAvailableVideos = async () => {
+    return new Promise((resolve, reject) => {
+        //Reads all the files from env.VIDEOS_DIR then error if failed otherwise array of file names
+        fs.readdir(process.env.VIDEOS_DIR, (err, files) => {
+            //If reading fails stop immediately
+            if (err) return reject(err);
+
+            //Loop through files keep vaild ones
+            const videoFiles = files.filter(file => {
+
+                //Get the extension changes to lower case
+                const ext = path.extname(file).toLowerCase();
+
+                //Return only valid ones
+                return ext === '.mp4' || ext === '.mov';
+            });
+
+            //Resolve promise
+            resolve(videoFiles);
+        });
+    });
+};
+
+// Generates thumbnail data stream via FFmpeg
+export const getThumbnailStream = (filename, callback) => {
+    //Build the video Path /sampleInput + ensantina.mp4
+    const videoPath = path.join(process.env.VIDEOS_DIR, filename);
+
+    //Checks if video exists in the filesystem
+    if (!fs.existsSync(videoPath)) {
+        //If missing throw error
+        return callback(new Error("Video file not found"), null);
+    }
+    //Terminal command string creation
+    /*
+        -ss get 1 second into the video, 
+        -i "${videoPath}" input video path
+        -vframes 1 get one video frame
+        -f image2pipe sends through a stream/pipe
+        -vcodec mjpeg encode output as jpeg image data
+        -Send outpuit to stdout
+    */
+    const ffmpegCmd = `ffmpeg -ss 00:00:01 -i "${videoPath}" -vframes 1 -f image2pipe -vcodec mjpeg pipe:1`;
+    //Run command encode as buffer because images are binary
+    exec(ffmpegCmd, { encoding: 'buffer' }, (err, stdout) => {
+        //if fails send error back
+        if (err) return callback(err, null);
+        //sucess, null means no error and here is the image buffer
+        callback(null, stdout);
+    });
+}
+
+// Starts the detached Java CLI application background run
+export const startProcessingJob = (filename, targetColor, threshold) => {
+    //Build paths 
+    const inputPath = path.join(process.env.VIDEOS_DIR, filename); //Input path /sampleInput
+    const outputCsvName = `${filename}.csv`; //Output csv name
+    const outputPath = path.join(process.env.RESULTS_DIR, outputCsvName); // Output path to the  {outputCsvName}.csv
+
+    //Check if video exists throw error if not
+    if (!fs.existsSync(inputPath)) {
+        throw new Error("Target video file does not exist.");
+    }
+
+    //Generate unique Job ID
+    const jobId = uuidv4();
+    //Json file, and initial status file
+    const statusFilePath = path.join(process.env.STATUS_DIR, `${jobId}.json`);
+    const logFilePath = path.join(process.env.STATUS_DIR, `${jobId}.log`);
+
+    // Write initial state file
+    fs.writeFileSync(statusFilePath, JSON.stringify({ status: "processing" }));
+
+    // Send standard stream out/err down to local log files
+    const logFileDescriptor = fs.openSync(logFilePath, 'a');
+
+    //Run jar with these parameters
+    const child = spawn('java', [
+        '-jar',
+        process.env.JAR_PATH,
+        inputPath,
+        outputPath,
+        targetColor,
+        threshold
+    ], {
+        //Makes sure to run independently from node.js
+        detached: true,
+        stdio: ['ignore', logFileDescriptor, logFileDescriptor]
+    });
+    
+    //Runs when java process exits
+    child.on('close', (code) => {
+        const finalStatus = code === 0
+            ? { status: "done", result: `/results/${outputCsvName}` }
+            : { status: "error", error: `Error processing video: Unexpected ffmpeg error (Exit code: ${code})` };
+
+        fs.writeFileSync(statusFilePath, JSON.stringify(finalStatus));
+    });
+
+    child.unref();
+    return jobId;
+}
+
+// Fetches current state JSON profile from disk
+export const getJobStatus = (jobId) => {
+    //Create status file path
+    const statusFilePath = path.join(process.env.STATUS_DIR, `${jobId}.json`);
+
+    //check to see if file exists if not return null
+    if (!fs.existsSync(statusFilePath)) {
+        return null;
+    }
+
+    //Read the file completely returns a string "{"status":"done","result":"/results/ensantina.mp4.csv"}"
+    const rawData = fs.readFileSync(statusFilePath, 'utf8');
+    //Parse rawData to json
+    return JSON.parse(rawData);
+}

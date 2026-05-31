@@ -1,3 +1,15 @@
+# ignore video and csv
+sampleInput/ensantina.mp4
+sampleInput/ensantina2.mp4
+sampleInput/test.mp4
+sampleOutput/result.csv
+
+server/node_modules
+.env
+
+# Maven build output
+target/
+
 # Compiled class file
 *.class
 
