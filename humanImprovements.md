@@ -1,49 +1,21 @@
 # adding tests
-    What portions of your code are untested / only lightly tested?
     - VideoCentroidProcessor and LargestGroupFinder
-    - For VideoCentroidProcessor there is no consistent way to test, so we oupted checking structure and output.
-    
-    Where would be the highest priority places to add new tests?
-    - VideoCentroidProcessor for more coverage
-    
-    Other testing improvements?
-    - TBA
-
-    tests
+    - VideoCentroidProcessor there is no consistent way to test, so our test file mainly checks structure and output.
     - more tests for video centroid finder
 
 # refactoring code
-
-
-What improvements can you make to the design/architecture of your code?
-    TBA
-
-    How can you split up large methods or classes into smaller components?
-    TBA
-
-    Are there unused files/methods that can be removed?
-     -All unused files have been removed.
-
-    Where would additional Java interfaces be appropriate?
-    TBA
-
-    How can you make things simpler, more-usable, and easier to maintain?
-    - we can do this by adjusting the larger files moving heavier logic into another file.
-    - for testing output we could adjust the command to track the centroid in a dedicated file rather than multiple ones.
-
-    Other refactoring improvements?
+    - Logic in heavier files can be moved into another file.
+    - Adjust csv output logic so results are stored in a testing csv
     - Adjusting the csv file out put because the naming for the file is a bit weird.
-
-    refactoring
     - VideoTestApp no longer needed (java video library test file)
     - make interface for LargestGroupFinder
-
 
 # improving error handling
     - check for valid video or path in VideoCentroidApp
 
-
-
 # writing documentation
     - new video processor classes need JavaDocs
+    - comments on dfs explore group method
 
+# improving performance
+    - skip every 10 frames in video centroid processor, do we need to analyze every single frame?
