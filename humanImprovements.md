@@ -10,3 +10,7 @@ tests
 
 writing documentation
 - new video processor classes need JavaDocs
+- comments on dfs explore group method
+
+improving performance
+- skip every 10 frames in video centroid processor, do we need to analyze every single frame?
