@@ -17,3 +17,14 @@
 
     Other refactoring improvements?
     - Adjusting the csv file out put because the naming for the file is a bit weird.
+
+# adding tests
+    What portions of your code are untested / only lightly tested?
+    - VideoCentroidProcessor and LargestGroupFinder
+    - For VideoCentroidProcessor there is no consistent way to test, so we oupted checking structure and output.
+    
+    Where would be the highest priority places to add new tests?
+    - VideoCentroidProcessor for more coverage
+    
+    Other testing improvements?
+    - TBA
