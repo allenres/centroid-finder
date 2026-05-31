@@ -5,6 +5,7 @@ sampleInput/test.mp4
 sampleOutput/result.csv
 
 server/node_modules
+server/statuses/*.json
 .env
 
 # Maven build output
