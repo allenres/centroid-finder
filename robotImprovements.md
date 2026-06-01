@@ -38,3 +38,19 @@ Standardize validation approach across the codebase
 Code Organization
 Consider extracting the binarization + group finding pipeline into a reusable service class
 The color parsing logic appears in multiple places (Java and Node)—consider a shared utility
+
+Security Vulnerabilities
+Path Traversal in videoService.js: The filename parameter in getThumbnailStream() and startProcessingJob() has no validation. A user could pass "../../etc/passwd" to read arbitrary files. You should whitelist valid filenames or reject path separators.
+No Input Validation on Query Parameters: targetColor and threshold in the controller aren't validated for format, range, or type before being passed to the Java process.
+Unvalidated JAR_PATH: The JAR_PATH environment variable is used without verifying it actually exists and points to a valid executable.
+
+Data Consistency Issues
+Race Conditions: If two jobs try to write results to the same output file, data corruption could occur. Use unique output paths or implement locking.
+LargestGroupFinder Bug: The method comment says "return null if empty" but returns a Group with (-1, -1) instead. This violates the contract and will cause confusion downstream.
+
+
+High Priority (Security/Stability):
+Add filename validation to prevent path traversal attacks
+Implement job queue with concurrency limits
+Add comprehensive error handling and logging
+Validate all environment variables on startup
