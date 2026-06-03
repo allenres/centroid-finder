@@ -6,15 +6,36 @@ import java.util.List;
 
 import org.bytedeco.javacv.*;
 
-/*
-For each frame:
-
-Convert frame to BufferedImage
-Find connected groups
-Find largest group
-Write timestamp + centroid to CSV
-
-*/
+/**
+ * Processes a video file frame-by-frame to locate the largest connected group
+ * of pixels matching a target color and writes the centroid positions of those
+ * groups to a CSV file.
+ *
+ * The input video is read using FFmpegFrameGrabber. Each frame is converted
+ * into a BufferedImage and binarized using a DistanceImageBinarizer with a
+ * Euclidean color distance algorithm. Pixels within the provided threshold
+ * distance of the target color are marked as foreground pixels.
+ *
+ * Connected foreground pixel groups are identified using a DFS-based
+ * BinaryGroupFinder. For each frame containing at least one group, the largest
+ * group is selected and its centroid coordinates are written to the output CSV
+ * file alongside the frame timestamp in seconds.
+ *
+ * Each output CSV row has the format:
+ *
+ * timestampSeconds, centroidX, centroidY
+ *
+ * Frames with no image data or no detected groups are skipped.
+ *
+ * Resources such as the frame grabber and CSV writer are automatically closed
+ * after processing completes.
+ *
+ * @param inputVideo the path to the input video file to process
+ * @param outputCsv the path to the CSV file where centroid data will be written
+ * @param targetColor the target RGB color encoded as an integer
+ * @param threshold the maximum Euclidean color distance allowed when matching
+ *                  pixels to the target color
+ */
 public class VideoCentroidProcessor {
 
     public void process(String inputVideo, String outputCsv, int targetColor, int threshold) {
