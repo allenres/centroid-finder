@@ -58,18 +58,20 @@ export const getThumbnailStream = (filename, callback) => {
 
 // Starts the detached Java CLI application background run
 export const startProcessingJob = (filename, targetColor, threshold) => {
+    //Generate unique Job ID
+    const jobId = uuidv4();
+
     //Build paths 
     const inputPath = path.join(process.env.VIDEOS_DIR, filename); //Input path /sampleInput
-    const outputCsvName = `${filename}.csv`; //Output csv name
+    const baseName = path.parse(filename).name; //Base name of the file without extension
+    const outputCsvName = `${baseName}_${jobId}.csv`; //Output csv name
     const outputPath = path.join(process.env.RESULTS_DIR, outputCsvName); // Output path to the  {outputCsvName}.csv
 
     //Check if video exists throw error if not
     if (!fs.existsSync(inputPath)) {
         throw new Error("Target video file does not exist.");
     }
-
-    //Generate unique Job ID
-    const jobId = uuidv4();
+    
     //Json file, and initial status file
     const statusFilePath = path.join(process.env.STATUS_DIR, `${jobId}.json`);
     const logFilePath = path.join(process.env.STATUS_DIR, `${jobId}.log`);
