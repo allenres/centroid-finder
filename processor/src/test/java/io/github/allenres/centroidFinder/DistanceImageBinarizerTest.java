@@ -205,4 +205,104 @@ public class DistanceImageBinarizerTest {
                         }
                 }
         }
+
+        @Test
+        void largerCheckerboardPattern() {
+                int[][] input = new int[10][10];
+
+                for (int y = 0; y < 10; y++) {
+                        for (int x = 0; x < 10; x++) {
+                                input[y][x] = (x + y) % 2;
+                        }
+                }
+
+                BufferedImage result = new DistanceImageBinarizer(
+                        new EuclideanColorDistance(), 0x000000, 10).toBufferedImage(input);
+
+                for (int y = 0; y < 10; y++) {
+                        for (int x = 0; x < 10; x++) {
+                                int expected = (input[y][x] == 1) ? 0xFFFFFF : 0x000000;
+                                assertEquals(expected, result.getRGB(x, y) & 0xFFFFFF);
+                        }
+                }
+        }
+
+        @Test
+        void singleRowImage() {
+                int[][] input = {
+                        {1, 0, 1, 1, 0}
+                };
+
+                BufferedImage result = new DistanceImageBinarizer(
+                        new EuclideanColorDistance(), 0x000000, 10).toBufferedImage(input);
+
+                assertEquals(5, result.getWidth());
+                assertEquals(1, result.getHeight());
+
+                assertEquals(0xFFFFFF, result.getRGB(0, 0) & 0xFFFFFF);
+                assertEquals(0x000000, result.getRGB(1, 0) & 0xFFFFFF);
+                assertEquals(0xFFFFFF, result.getRGB(2, 0) & 0xFFFFFF);
+        }
+
+        @Test
+        void singleColumnImage() {
+                int[][] input = {
+                        {1},
+                        {0},
+                        {1}
+                };
+
+                BufferedImage result = new DistanceImageBinarizer(
+                        new EuclideanColorDistance(), 0x000000, 10).toBufferedImage(input);
+
+                assertEquals(1, result.getWidth());
+                assertEquals(3, result.getHeight());
+
+                assertEquals(0xFFFFFF, result.getRGB(0, 0) & 0xFFFFFF);
+                assertEquals(0x000000, result.getRGB(0, 1) & 0xFFFFFF);
+                assertEquals(0xFFFFFF, result.getRGB(0, 2) & 0xFFFFFF);
+        }
+
+        @Test
+        void emptyInput_throwsException() {
+                int[][] input = new int[0][0];
+
+                assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
+                        new DistanceImageBinarizer(
+                                new EuclideanColorDistance(), 0x000000, 10)
+                                .toBufferedImage(input);
+                });
+        }
+
+        @Test
+        void jaggedArray_inputThrowsOrHandlesConsistently() {
+                int[][] input = {
+                        {1, 0, 1},
+                        {0, 1}
+                };
+
+                assertThrows(Exception.class, () -> {
+                        new DistanceImageBinarizer(
+                                new EuclideanColorDistance(), 0x000000, 10)
+                                .toBufferedImage(input);
+                });
+        }
+
+        @Test
+        void outputIsStrictlyBinaryColorsOnly() {
+                int[][] input = {
+                        {1, 1},
+                        {0, 0}
+                };
+
+                BufferedImage result = new DistanceImageBinarizer(
+                        new EuclideanColorDistance(), 0x000000, 10).toBufferedImage(input);
+
+                for (int y = 0; y < result.getHeight(); y++) {
+                        for (int x = 0; x < result.getWidth(); x++) {
+                                int rgb = result.getRGB(x, y) & 0xFFFFFF;
+                                assertTrue(rgb == 0x000000 || rgb == 0xFFFFFF);
+                        }
+                }
+        }
 }
