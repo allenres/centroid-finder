@@ -60,11 +60,12 @@ export const getThumbnailStream = (filename, callback) => {
 export const startProcessingJob = (filename, targetColor, threshold) => {
     //Generate unique Job ID
     const jobId = uuidv4();
+    const shortJobId = jobId.split('-')[0]; // Shorten for easier reference
 
     //Build paths 
     const inputPath = path.join(process.env.VIDEOS_DIR, filename); //Input path /sampleInput
     const baseName = path.parse(filename).name; //Base name of the file without extension
-    const outputCsvName = `${baseName}_${jobId}.csv`; //Output csv name
+    const outputCsvName = `${baseName}_${shortJobId}.csv`; //Output csv name
     const outputPath = path.join(process.env.RESULTS_DIR, outputCsvName); // Output path to the  {outputCsvName}.csv
 
     //Check if video exists throw error if not
