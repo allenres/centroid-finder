@@ -70,6 +70,7 @@ export const startProcessingJob = (filename, targetColor, threshold) => {
     const baseName = path.parse(filename).name; //Base name of the file without extension
     const outputCsvName = `${baseName}-${timestamp}-${shortJobId}.csv`; //Output csv name
     const outputPath = path.join(process.env.RESULTS_DIR, outputCsvName); // Output path to the  {outputCsvName}.csv
+    const relativeOutputPath = path.relative(process.cwd(), outputPath).replace(/\\/g, '/');
 
     //Check if video exists throw error if not
     if (!fs.existsSync(inputPath)) {
@@ -103,7 +104,7 @@ export const startProcessingJob = (filename, targetColor, threshold) => {
     //Runs when java process exits
     child.on('close', (code) => {
         const finalStatus = code === 0
-            ? { status: "done", result: `/results/${outputCsvName}` }
+            ? { status: "done", result: `${relativeOutputPath}` }
             : { status: "error", error: `Error processing video: Unexpected ffmpeg error (Exit code: ${code})` };
 
         fs.writeFileSync(statusFilePath, JSON.stringify(finalStatus));
