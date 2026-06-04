@@ -37,17 +37,50 @@ import javax.imageio.ImageIO;
  */
 public class VideoCentroidApp {
     public static void main(String[] args) {
-        if (args.length < 3) {
-            System.out.println("Usage: java -jar videoprocessor.jar <input_path> <output_csv> <hex_target_color> <threshold>");
+        if (args.length < 4) {
+            System.out.println(
+                    "Usage: java -jar videoprocessor.jar <input_path> <output_csv> <hex_target_color> <threshold>");
             return;
         }
 
         String inputVideoPath = args[0];
         String outputCsv = args[1];
         String hexTargetColor = args[2];
-        int threshold = 0;
+
+        // Validate video file
+        File videoFile = new File(inputVideoPath);
+
+        if (!videoFile.exists()) {
+            System.err.println("Input video file does not exist: " + inputVideoPath);
+            return;
+        }
+
+        if (!videoFile.isFile()) {
+            System.err.println("Input path is not a file: " + inputVideoPath);
+            return;
+        }
+
+        if (!videoFile.canRead()) {
+            System.err.println("Input video file cannot be read: " + inputVideoPath);
+            return;
+        }
+
+        String fileName = videoFile.getName().toLowerCase();
+        if (!(fileName.endsWith(".mp4")
+                || fileName.endsWith(".avi")
+                || fileName.endsWith(".mov")
+                || fileName.endsWith(".mkv"))) {
+            System.err.println("Unsupported video format. Supported formats: mp4, avi, mov, mkv");
+            return;
+        }
+
+        int threshold;
         try {
             threshold = Integer.parseInt(args[3]);
+            if (threshold < 0) {
+                System.err.println("Threshold must be non-negative.");
+                return;
+            }
         } catch (NumberFormatException e) {
             System.err.println("Threshold must be an integer.");
             return;
@@ -55,7 +88,7 @@ public class VideoCentroidApp {
 
         // Parse the target color from a hex string (format RRGGBB) into a 24-bit
         // integer (0xRRGGBB)
-        int targetColor = 0;
+        int targetColor;
         try {
             targetColor = Integer.parseInt(hexTargetColor, 16);
         } catch (NumberFormatException e) {
@@ -65,6 +98,5 @@ public class VideoCentroidApp {
 
         VideoCentroidProcessor processor = new VideoCentroidProcessor();
         processor.process(inputVideoPath, outputCsv, targetColor, threshold);
-
     }
 }
