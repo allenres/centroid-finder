@@ -11,3 +11,4 @@ IMPOSSIBLE:
 - allow researchers to see the centroid location live, while the video is playing
 - in addition, allowing them to draw boundies or areas in the video, and the app will collect data on the time the salamander spent in these areas
 - the app will display a comprehensive overview of the data, like the areas it spent the most, the least, and other metrics that are important to the researcher
+- allow researchers to view full video regularly or in binarized view, this can be toggled in real time

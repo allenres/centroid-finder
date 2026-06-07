@@ -5,3 +5,5 @@
 - a roadmap of planned / potential improvements (like improving the performance of the processor)
 - performance metrics? how we improved the performance of the code over time
 - an API reference? 
+- a set up guide for using this project
+- consistant code styling using prettier
