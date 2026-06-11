@@ -9,5 +9,17 @@ Centroid finder takes a video input file and for each frame of the video locates
 - Pixels within the provided threshold distance of the target color are marked as foreground (white) pixels.
 - Groups of white pixels are identified using a DFS algorithm, and the largest group is selected to have its centroid cooridinates written to the output csv, alongside the frame timestamp in seconds. It is in the following format: timestampSeconds, centroidX, centroidY
 
+## Required Software
+We recommened usign chocolatey package manager for easy installation on Windows.
+- Node
+- FFmpeg
+choco install ffmpeg
+- Maven
+choco install maven
+- Java
+
+
 ## Setup Instructions
+- In the processor directory, 
+- CD into ./server and do npm install
 
