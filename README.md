@@ -10,7 +10,26 @@ Centroid finder takes a video input file and for each frame of the video locates
 - Groups of white pixels are identified using a DFS algorithm, and the largest group is selected to have its centroid cooridinates written to the output csv, alongside the frame timestamp in seconds. It is in the following format: timestampSeconds, centroidX, centroidY
 
 ## Backend Server
-The centroid finder server helps to serve a front-end user interface. 
+The centroid finder server helps to serve a front-end user interface.
+
+Our server is structured in 3 main folders based on MVC structure:
+#### ROUTES
+- TBA
+- TBA
+- TBA 
+#### SERVICES
+- TBA
+- TBA
+- TBA 
+#### CONTROLLERS
+- TBA
+- TBA
+- TBA 
+
+You can read our documentation for the salamander api in the file "salamander-api-postman-documentation.md"
+
+To use our front end please visit: https://github.com/allenres/salamander-tracker
+
 
 ## Required Software
 We recommened using Chocolatey package manager for easy installation on Windows.
