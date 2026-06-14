@@ -76,7 +76,7 @@ export const startProcessingJob = (filename, targetColor, threshold) => {
     if (!fs.existsSync(inputPath)) {
         throw new Error("Target video file does not exist.");
     }
-    
+
     //Json file, and initial status file
     const statusFilePath = path.join(process.env.STATUS_DIR, `${jobId}.json`);
     const logFilePath = path.join(process.env.STATUS_DIR, `${jobId}.log`);
@@ -100,7 +100,15 @@ export const startProcessingJob = (filename, targetColor, threshold) => {
         detached: true,
         stdio: ['ignore', logFileDescriptor, logFileDescriptor]
     });
-    
+
+    // If the spawn fails
+    child.on('error', (err) => {
+        fs.writeFileSync(statusFilePath, JSON.stringify({
+            status: "error",
+            error: err.message
+        }));
+    });
+
     //Runs when java process exits
     child.on('close', (code) => {
         const finalStatus = code === 0
