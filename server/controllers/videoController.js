@@ -114,9 +114,9 @@ export const checkJobStatus = (req, res) => {
 }
 
 export const downloadCSV = (req, res) => {
-    const {filename} = req.params;
+    const {id} = req.params;
     try {
-        return res.status(200).json({"test": filename})
+        return res.status(200).json({"test": id})
     } catch (err){
         return res.status(500).json({ err: "Error downloading csv" })
     }
