@@ -112,3 +112,19 @@ export const checkJobStatus = (req, res) => {
         return res.status(500).json({ error: "Error fetching job status" })
     }
 }
+
+export const downloadCSV = (req, res) => {
+    const {id} = req.params;
+    try {
+        const statusData = videoService.getJobStatus(id)
+
+        if (!statusData) {
+            return res.status(404).json({ error: "Job ID not found" });
+        }
+        
+        return res.download(statusData.result)
+    } catch (err){
+        return res.status(500).json({ err: "Error downloading csv" })
+    }
+    
+}
