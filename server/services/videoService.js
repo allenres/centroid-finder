@@ -129,3 +129,18 @@ export const getJobStatus = (jobId) => {
     //Parse rawData to json
     return JSON.parse(rawData);
 }
+
+export const getCSVFile = (jobId) => {
+    /*
+    Frontend clicks download
+            ↓
+    Request hits endpoint
+            ↓
+    Service finds CSV path
+            ↓
+    Controller sends file
+            ↓
+    Browser downloads
+    */
+    return {"test": jobId};
+}

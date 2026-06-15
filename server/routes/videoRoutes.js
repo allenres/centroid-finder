@@ -7,6 +7,6 @@ router.get('/api/videos', videoController.listVideos);
 router.get('/thumbnail/:filename', videoController.getThumbnail); 
 router.post('/process/:filename', videoController.createJob); 
 router.get('/process/:jobId/status', videoController.checkJobStatus);
-router.get('/download/:filename', videoController.downloadCSV);
+router.get('/download/:id', videoController.downloadCSV);
 
 export default router;
