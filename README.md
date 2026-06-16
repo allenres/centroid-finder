@@ -47,7 +47,7 @@ choco install maven
 - In the server directory, run
 -   npm install
 Finally, configure your dot ENV 
-- PORT, VIDEOS_DIR, RESULTS_DIR, STATUS_DIR, JAR_PATH
+- PORT=3000, VIDEOS_DIR, RESULTS_DIR, STATUS_DIR, JAR_PATH
 
 ## How do I run it?
 To run the program alone, execute:

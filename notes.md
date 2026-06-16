@@ -308,3 +308,7 @@ java -jar target/centroid-finder-1.0-SNAPSHOT.jar sampleInput/test.mp4 sampleOut
 
 // with JAR:
 java -jar target/centroid-finder-1.0-SNAPSHOT.jar sampleInput/ensantina2.mp4 sampleOutput/result.csv 530108 50
+
+javac -d target/classes src/main/java/io/github/allenres/centroidFinder/CentroidData.java src/main/java/io/github/allenres/centroidFinder/CentroidAnalyzer.java src/main/java/io/github/allenres/centroidFinder/CentroidAnalyzerApp.java
+
+java -cp target/classes io.github.allenres.centroidFinder.CentroidAnalyzerApp sampleOutput/result.csv
