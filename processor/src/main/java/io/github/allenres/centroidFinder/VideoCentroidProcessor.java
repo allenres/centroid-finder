@@ -79,11 +79,12 @@ public class VideoCentroidProcessor {
                 // find largest group
                 Group largestGroup = largestGroupFinder.findLargest(groups);
 
+                CentroidData data = new CentroidData(timestampSeconds, largestGroup.centroid().x(), largestGroup.centroid().y());
                 // Write the groups information to a CSV file.
                 writer.println(
-                        timestampSeconds + "," +
-                        largestGroup.centroid().x() + "," +
-                        largestGroup.centroid().y()
+                        data.timestamp() + "," +
+                        data.x() + "," +
+                        data.y()
                 );
             }
 
