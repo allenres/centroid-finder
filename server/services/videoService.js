@@ -137,3 +137,37 @@ export const getJobStatus = (jobId) => {
     //Parse rawData to json
     return JSON.parse(rawData);
 }
+
+// Generates a 5-second preview GIF via FFmpeg for hover states
+export const getPreviewGIF = (filename, callback) => {
+    // Build the video Path
+    const videoPath = path.join(process.env.VIDEOS_DIR, filename);
+
+    // Checks if video exists in the filesystem
+    if (!fs.existsSync(videoPath)) {
+        return callback(new Error("Video file not found"), null);
+    }
+
+    /*
+        FFmpeg Flags Break Down:
+        -ss 00:00:00        : Start from the very beginning of the video
+        -t 5                : Stop processing after 5 seconds
+        -i "${videoPath}"   : Input video file path
+        -vf "..."           : Video filtergraph:
+           - fps=12         : Downsample the framerate to 12 FPS to keep the file size reasonable
+           - scale=320:-1   : Scale width to 320px, keeping the aspect ratio automatic (-1)
+           - split [a][b]; [a] palettegen [p]; [b][p] paletteuse: Generates a custom 256-color palette from the video stream dynamically for vibrant output
+        -f gif              : Encode the output container layout as standard GIF formats
+        pipe:1              : Redirect the output binary stream directly to Node's stdout
+    */
+    const ffmpegCmd = `ffmpeg -ss 00:00:00 -t 5 -i "${videoPath}" -vf "fps=12,scale=320:-1,split[a][b];[a]palettegen[p];[b][p]paletteuse" -f gif pipe:1`;
+
+    // Run command, matching the binary buffer wrapper logic used in getThumbnailStream
+    exec(ffmpegCmd, { encoding: 'buffer', maxBuffer: 10 * 1024 * 1024 }, (err, stdout) => {
+        // If execution fails, pass the error back
+        if (err) return callback(err, null);
+        
+        // Success: pass null for the error context and the binary GIF buffer
+        callback(null, stdout);
+    });
+};

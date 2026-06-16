@@ -113,6 +113,31 @@ export const checkJobStatus = (req, res) => {
     }
 }
 
+/**
+ * Generates and returns an animated preview GIF for a given video file.
+ *
+ * The preview shows the first 5 seconds of the video and is streamed 
+ * back as an image/gif content type.
+ *
+ * @route GET /preview/:filename
+ * @param {string} req.params.filename - Name of the video file
+ * @returns {image/gif} Animated GIF preview data stream
+ * @returns {500} Error generating preview GIF
+ */
+export const getPreviewGIF = (req, res) => {
+    const { filename } = req.params;
+
+    videoService.getPreviewGIF(filename, (err, gifBuffer) => {
+        if (err) {
+            return res.status(500).json({ error: "Error generating preview GIF" });
+        }
+        
+        // Inform the client browser that it's receiving raw GIF data
+        res.set('Content-Type', 'image/gif');
+        return res.send(gifBuffer);
+    });
+};
+
 export const downloadCSV = (req, res) => {
     const {id} = req.params;
     try {
@@ -126,5 +151,4 @@ export const downloadCSV = (req, res) => {
     } catch (err){
         return res.status(500).json({ err: "Error downloading csv" })
     }
-    
 }
