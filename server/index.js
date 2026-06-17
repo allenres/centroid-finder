@@ -1,9 +1,9 @@
-import express from 'express';
-import dotenv from 'dotenv';
-import path from 'path';
-import fs from 'fs';
-import { fileURLToPath } from 'url';
-import videoRoutes from './routes/videoRoutes.js';
+import express from "express";
+import dotenv from "dotenv";
+import path from "path";
+import fs from "fs";
+import { fileURLToPath } from "url";
+import videoRoutes from "./routes/videoRoutes.js";
 
 // Load environment variables
 dotenv.config();
@@ -21,8 +21,8 @@ if (!fs.existsSync(process.env.STATUS_DIR)) {
 app.use(express.json());
 
 //static directories
-app.use('/videos', express.static(process.env.VIDEOS_DIR));
-app.use('/results', express.static(process.env.RESULTS_DIR));
+app.use("/videos", express.static(process.env.VIDEOS_DIR));
+app.use("/results", express.static(process.env.RESULTS_DIR));
 
 //routers
 app.use(videoRoutes);

@@ -1,13 +1,13 @@
-import { Router } from 'express';
-import * as videoController from '../controllers/videoController.js';
+import { Router } from "express";
+import * as videoController from "../controllers/videoController.js";
 
 const router = Router();
 
-router.get('/api/videos', videoController.listVideos); 
-router.get('/thumbnail/:filename', videoController.getThumbnail); 
-router.get('/preview/:filename', videoController.getPreviewGIF);
-router.post('/process/:filename', videoController.createJob); 
-router.get('/process/:jobId/status', videoController.checkJobStatus);
-router.get('/download/:id', videoController.downloadCSV);
+router.get("/api/videos", videoController.listVideos);
+router.get("/thumbnail/:filename", videoController.getThumbnail);
+router.get("/preview/:filename", videoController.getPreviewGIF);
+router.post("/process/:filename", videoController.createJob);
+router.get("/process/:jobId/status", videoController.checkJobStatus);
+router.get("/download/:id", videoController.downloadCSV);
 
 export default router;
