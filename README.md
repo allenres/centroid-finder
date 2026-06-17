@@ -16,6 +16,7 @@ You can read our documentation for the salamander api in the file "salamander-ap
 
 To use our front end please visit: https://github.com/allenres/salamander-tracker
 
+<img width="800" height="409" alt="demo" src="https://github.com/user-attachments/assets/16c553c1-8716-403b-8ec9-7a071ed0ca88" />
 
 ## Required Software
 We recommened using Chocolatey package manager for easy installation on Windows.
@@ -26,15 +27,12 @@ We recommened using Chocolatey package manager for easy installation on Windows.
 
 
 ## Setup Instructions
-- In the processor directory, run
--   mvn install
-- In the server directory, run
--   npm install
-Finally, configure your dot ENV 
-- PORT=3000, VIDEOS_DIR, RESULTS_DIR, STATUS_DIR, JAR_PATH
+- In the processor directory, run mvn install
+- In the server directory, run npm install
+- Finally, configure your dot ENV: PORT=3000, VIDEOS_DIR, RESULTS_DIR, STATUS_DIR, JAR_PATH
 
 ## How do I run it?
 To run the program alone, execute:
 - java -jar target/centroid-finder-1.0-SNAPSHOT.jar input_file_path output_csv_path hex_color threshold
-- If you intend to use this program with a front-end, run the Express server:
+If you intend to use this program with a front-end, run the Express server:
 - node server/index.js
