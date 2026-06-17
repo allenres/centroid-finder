@@ -12,20 +12,6 @@ Centroid finder takes a video input file and for each frame of the video locates
 ## Backend Server
 The centroid finder server helps to serve a front-end user interface.
 
-Our server is structured in 3 main folders based on MVC structure:
-#### ROUTES
-- TBA
-- TBA
-- TBA 
-#### SERVICES
-- TBA
-- TBA
-- TBA 
-#### CONTROLLERS
-- TBA
-- TBA
-- TBA 
-
 You can read our documentation for the salamander api in the file "salamander-api-postman-documentation.md"
 
 To use our front end please visit: https://github.com/allenres/salamander-tracker
@@ -34,10 +20,8 @@ To use our front end please visit: https://github.com/allenres/salamander-tracke
 ## Required Software
 We recommened using Chocolatey package manager for easy installation on Windows.
 - Node
-- FFmpeg
-choco install ffmpeg
-- Maven
-choco install maven
+- FFmpeg (choco install ffmpeg)
+- Maven (choco install maven)
 - Java
 
 
@@ -52,5 +36,5 @@ Finally, configure your dot ENV
 ## How do I run it?
 To run the program alone, execute:
 - java -jar target/centroid-finder-1.0-SNAPSHOT.jar input_file_path output_csv_path hex_color threshold
-If you intend to use this program with a front-end, run the Express server:
+- If you intend to use this program with a front-end, run the Express server:
 - node server/index.js
