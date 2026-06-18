@@ -34,5 +34,4 @@ We recommened using Chocolatey package manager for easy installation on Windows.
 ## How do I run it?
 To run the program alone, execute:
 - java -jar target/centroid-finder-1.0-SNAPSHOT.jar input_file_path output_csv_path hex_color threshold
-If you intend to use this program with a front-end, run the Express server:
-- node server/index.js
+- If you intend to use this program with a front-end, run the Express server: node server/index.js
